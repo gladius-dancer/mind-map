@@ -14,7 +14,7 @@ type Props = {
 function Block({ treeItem, addChild, addCords }: Props) {
     const { version, label, childs } = treeItem;
 
-    const { getParrentCordinates, getChildCordinates } = useBlock();
+    const { getParentCoordinates, getChildCoordinates } = useBlock();
 
     useEffect(() => {
         const cords: CoordinateType[][] = [];
@@ -22,8 +22,8 @@ function Block({ treeItem, addChild, addCords }: Props) {
             branch.map((item: TreeType) => {
                 item.childs.map((child) => {
                     cords.push([
-                        getParrentCordinates(document.getElementById(item.version)),
-                        getChildCordinates(document.getElementById(child.version)),
+                        getParentCoordinates(document.getElementById(item.version)),
+                        getChildCoordinates(document.getElementById(child.version)),
                     ]);
                 });
                 getRefCordinates(item?.childs);

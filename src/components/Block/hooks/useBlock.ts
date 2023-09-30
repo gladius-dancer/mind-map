@@ -1,23 +1,27 @@
 import { CoordinateType } from "../../../types/CoordinateType";
 
 function useBlock() {
-    const getParrentCordinates = (
+    const offsetX=180;
+    const offsetY=30;
+    const getParentCoordinates = (
         element: HTMLElement | null,
     ): CoordinateType => {
-        const parent = element?.getBoundingClientRect();
-        if (parent) return { x: parent.x + 180, y: parent.y + 30 };
+        const top = element?.offsetTop;
+        const left = element?.offsetLeft;
+        if (top && left) return { x: left + offsetX, y: top + offsetY };
         return { x: 0, y: 0 };
     };
 
-    const getChildCordinates = (element: HTMLElement | null): CoordinateType => {
-        const parent = element?.getBoundingClientRect();
-        if (parent) return { x: parent.x, y: parent.y + 30 };
+    const getChildCoordinates = (element: HTMLElement | null): CoordinateType => {
+        const top = element?.offsetTop;
+        const left = element?.offsetLeft;
+        if (top && left ) return { x: left, y: top + offsetY };
         return { x: 0, y: 0 };
     };
 
     return {
-        getParrentCordinates,
-        getChildCordinates,
+        getParentCoordinates,
+        getChildCoordinates,
     };
 }
 
