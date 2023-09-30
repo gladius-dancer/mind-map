@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./Block.css";
 import useBlock from "./hooks/useBlock";
 import { Icons } from "../../assets/Icons";
@@ -9,10 +9,12 @@ type Props = {
   treeItem: TreeType;
   addChild: (a: string) => void;
   addCords: (val: CoordinateType[][]) => void;
+  setLayerWith: (val: number | undefined)=>void;
 };
 
-function Block({ treeItem, addChild, addCords }: Props) {
+function Block({ treeItem, addChild, addCords, setLayerWith }: Props) {
     const { version, label, childs } = treeItem;
+    const layer = useRef<HTMLDivElement | null>(null);
 
     const { getCoordinates} = useBlock();
 
@@ -35,10 +37,11 @@ function Block({ treeItem, addChild, addCords }: Props) {
         };
         calcCoordinates([treeItem]);
         addCords(cords);
+        setLayerWith(layer.current?.offsetWidth);
     }, [treeItem]);
 
     return (
-        <div className="block-layer">
+        <div className="block-layer" ref={layer}>
             <div className="block-container-column">
                 <div className="block" id={treeItem.version}>
                     <p>
@@ -55,6 +58,7 @@ function Block({ treeItem, addChild, addCords }: Props) {
                             treeItem={item}
                             addChild={addChild}
                             addCords={addCords}
+                            setLayerWith={setLayerWith}
                         />
                     ))}
                 </div>

@@ -3,6 +3,7 @@ import { CoordinateType } from "../../../types/CoordinateType";
 
 function useDraw() {
     const [coords, setCoords] = useState<CoordinateType[][]>([]);
+    const [layerWidth, setLayerWidth] = useState<number | undefined>(0);
 
     const distance = (start: CoordinateType, end: CoordinateType) => {
         const dx = start.x - end.x;
@@ -32,6 +33,8 @@ function useDraw() {
 
     return {
         coords,
+        layerWidth,
+        setLayerWidth,
         setCoords,
         calculatePath,
     };
