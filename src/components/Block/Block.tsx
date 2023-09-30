@@ -14,24 +14,26 @@ type Props = {
 function Block({ treeItem, addChild, addCords }: Props) {
     const { version, label, childs } = treeItem;
 
-    const { getParentCoordinates, getChildCoordinates } = useBlock();
+    const { getCoordinates} = useBlock();
 
     useEffect(() => {
         const cords: CoordinateType[][] = [];
-        const getRefCordinates = (branch: TreeType[]) => {
+        const offsetX=180;
+        const offsetY=30;
+        const calcCoordinates = (branch: TreeType[]) => {
             branch.map((item: TreeType) => {
                 item.childs.map((child) => {
                     cords.push([
-                        getParentCoordinates(document.getElementById(item.version)),
-                        getChildCoordinates(document.getElementById(child.version)),
+                        getCoordinates(document.getElementById(item.version), offsetX, offsetY),
+                        getCoordinates(document.getElementById(child.version), 0, offsetY),
                     ]);
                 });
-                getRefCordinates(item?.childs);
+                calcCoordinates(item?.childs);
             });
 
             return cords;
         };
-        getRefCordinates([treeItem]);
+        calcCoordinates([treeItem]);
         addCords(cords);
     }, [treeItem]);
 

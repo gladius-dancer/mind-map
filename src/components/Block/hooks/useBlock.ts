@@ -1,10 +1,11 @@
 import { CoordinateType } from "../../../types/CoordinateType";
 
 function useBlock() {
-    const offsetX=180;
-    const offsetY=30;
-    const getParentCoordinates = (
+
+    const getCoordinates = (
         element: HTMLElement | null,
+        offsetX: number,
+        offsetY: number
     ): CoordinateType => {
         const top = element?.offsetTop;
         const left = element?.offsetLeft;
@@ -12,17 +13,8 @@ function useBlock() {
         return { x: 0, y: 0 };
     };
 
-    const getChildCoordinates = (element: HTMLElement | null): CoordinateType => {
-        const top = element?.offsetTop;
-        const left = element?.offsetLeft;
-        if (top && left ) return { x: left, y: top + offsetY };
-        return { x: 0, y: 0 };
-    };
-
     return {
-        getParentCoordinates,
-        getChildCoordinates,
+        getCoordinates,
     };
 }
-
 export default useBlock;
